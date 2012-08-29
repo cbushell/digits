@@ -8,16 +8,18 @@ function initDigits() {
 
     var nextX = 0;
     var nextY = 0;
+    var pixelWidth = 10;
+    var distanceBetweenPixels = 1;
 
     d.forEach(function (i) {
-        var rect = sampleSVG.append("rect")
+        sampleSVG.append("rect")
             .attr("x", nextX)
             .attr("y", nextY)
-            .attr("height", 10)
-            .attr("width", 10).
-            attr("class", "pixel-" + i);
+            .attr("height", pixelWidth)
+            .attr("width", pixelWidth)
+            .attr("class", "pixel-" + i);
 
-        nextX = nextX + 11;
+        nextX += pixelWidth + distanceBetweenPixels;
     });
 
 }
