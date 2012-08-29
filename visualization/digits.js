@@ -10,17 +10,32 @@ function initDigits() {
     var nextY = 0;
     var pixelWidth = 10;
     var distanceBetweenPixels = 1;
+    var numberOfPixelsPerRow = 28;
 
-    d.forEach(function (i) {
-        sampleSVG.append("rect")
-            .attr("x", nextX)
-            .attr("y", nextY)
-            .attr("height", pixelWidth)
-            .attr("width", pixelWidth)
-            .attr("class", "pixel-" + i);
+    var x1 = 0;
+    var x2 = 28;
 
-        nextX += pixelWidth + distanceBetweenPixels;
-    });
+    while (x2 <= d.length) {
+        var row = d.slice(x1, x2);
+
+        row.forEach(function (i) {
+            sampleSVG.append("rect")
+                .attr("x", nextX)
+                .attr("y", nextY)
+                .attr("height", pixelWidth)
+                .attr("width", pixelWidth)
+                .attr("class", "pixel-" + i);
+
+            nextX += pixelWidth + distanceBetweenPixels;
+        });
+
+        nextX = 0;
+        nextY += pixelWidth + distanceBetweenPixels;
+
+        x1 = x2;
+        x2 = x1 + numberOfPixelsPerRow;
+    }
+
 
 }
 
