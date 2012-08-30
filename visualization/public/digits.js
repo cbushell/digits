@@ -11,7 +11,8 @@ function initDigits() {
         var container = d3.select("body")
             .append("svg")
             .attr("width", numberOfPixelsPerRow * (pixelWidth + distanceBetweenPixels))
-            .attr("height", numberOfPixelsPerRow * (pixelWidth + distanceBetweenPixels) * row.length);
+            .attr("height", (numberOfPixelsPerRow * (pixelWidth + distanceBetweenPixels) * row.length) +
+            (distanceBetweenDigits * row.length));
 
         row.forEach(function (digit) {
             chunk(d3.values(digit), numberOfPixelsPerRow).forEach(function (pixels) {
