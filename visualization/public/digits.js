@@ -12,21 +12,35 @@ function initDigits() {
     var distanceBetweenPixels = 1;
     var numberOfPixelsPerRow = 28;
 
-    d.chunk(numberOfPixelsPerRow).forEach(function (row) {
-        row.forEach(function (i) {
-            sampleSVG.append("rect")
-                .attr("x", nextX)
-                .attr("y", nextY)
-                .attr("height", pixelWidth)
-                .attr("width", pixelWidth)
-                .attr("class", "pixel-" + i);
+    d3.csv("small.csv", function (row) {
+        row.forEach(function (digit) {
+            chunk(d3.values(digit), numberOfPixelsPerRow).forEach(function (pixels) {
+                pixels.forEach(function (pixel) {
+                    sampleSVG.append("rect")
+                        .attr("x", nextX)
+                        .attr("y", nextY)
+                        .attr("width", pixelWidth)
+                        .attr("height", pixelWidth)
+                        .attr("class", "pixel-" + pixel);
 
-            nextX += pixelWidth + distanceBetweenPixels;
+                    nextX += pixelWidth + distanceBetweenPixels;
+                });
+
+                nextX = 0;
+                nextY += pixelWidth + distanceBetweenPixels;
+            });
         });
-
-        nextX = 0;
-        nextY += pixelWidth + distanceBetweenPixels;
     });
+
+    function chunk(a, chunkSize) {
+        var array = a;
+
+        return [].concat.apply([],
+            array.map(function (elem, i) {
+                return i % chunkSize ? [] : [array.slice(i, i + chunkSize)];
+            })
+        );
+    }
 
 }
 
